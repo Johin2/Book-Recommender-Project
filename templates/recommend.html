@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <title>Book Recommender</title>
+</head>
+<body style="background-color: black;">
+    <nav class="navbar" style="background-color: wheat ;">
+        <a class="navbar-brand" href="" style="margin-left:  50px;">Book Recommender</a>
+        <ul class="nav navbar-nav">
+            <li><a href="/" style="color: rgb(49, 28, 212); text-decoration: none;">Home</a></li>
+            <li><a href="/recommend" style="color: rgb(49, 28, 212); text-decoration: none; ">Recommend</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 20px;">
+                <h1 class="text-white" style="font-size: 30px; margin-top: 20px;">Recommended Books</h1>
+                <form action="/recommended_books", method="POST">
+                    <input name= 'user-input' type="text" class="form-control form-control-lg"><br>
+                    <input type="submit" name="" class="btn btn-lg btn-warning">
+                </form>
+            </div>
+
+            {% if data %}
+            {% for i in data %}
+            <div class="col-md-3" style="margin-top: 30px;">
+                <div class="card">
+                    <div class="card-body">
+                        <img src='{{ i[2]}}'
+                        alt="Book Image" class="card-img-top" style="margin-bottom: 10px;">
+                        <h1 class="text-black">{{ i[0] }}</h1>
+                         <p class="text-black" style="margin-bottom: 3px;">{{ i[1] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            
+
+            
+
+        </div>
+    </div>
+    
+</body>
+</html>
