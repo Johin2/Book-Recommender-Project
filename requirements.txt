@@ -1,4 +1,8 @@
 flask
 numpy
 pandas
+<<<<<<< HEAD
 pickle
+=======
+pickle
+>>>>>>> refs/remotes/origin/main
