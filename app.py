@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import pickle
+import pandas as pd
 
 popular_df = pickle.load(open('popular.pkl', 'rb'))
 books = pickle.load(open('books.pkl', 'rb'))
@@ -27,10 +28,13 @@ def recommend_ui():
 @app.route('/recommended_books', methods= ['POST'])
 def recommend():
     user_input = request.form.get('user-input')
-    index = pivot_table.index.get_loc(user_input)
-    similarity_row = similarity_score[index]
-    similar_items = sorted(list(enumerate(similarity_row)), key = lambda x : x[1], reverse = True)[1:5]
-    similar_books = [pivot_table.index[i[0]] for i in similar_items]
+    try:
+        index = pivot_table.index.get_loc(user_input)
+        similarity_row = similarity_score[index]
+        similar_items = sorted(list(enumerate(similarity_row)), key = lambda x : x[1], reverse = True)[1:5]
+        similar_books = [pivot_table.index[i[0]] for i in similar_items]
+    except KeyError:
+        return render_template('booknotfound.html')
     
     data = []
     for book in similar_books:
@@ -40,8 +44,8 @@ def recommend():
         item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Author']))
         item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M']))
         data.append(item)
-
+    
     return render_template('recommend.html', data = data)
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug=True)
